@@ -1,0 +1,9 @@
+Billes,1.5,100
+Cahier,2.75,50
+USB,8.99,30
+Calculatrice,15.9,15
+Lampes,12.5,10
+Casques,35.0,25
+Crayons,5.5,60
+Gourde,18.2,40
+Livres,9.99,10
