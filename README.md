@@ -1,13 +1,13 @@
- Projet_Algo.Guardia
-╔═╗╦═╗╔═╗ ╦╔═╗╔╦╗  ╔═╗╦  ╔═╗╔═╗╦═╗╦╔╦╗╦ ╦╔╦╗╦╔═╗
-╠═╝╠╦╝║ ║ ║║╣  ║   ╠═╣║  ║ ╦║ ║╠╦╝║ ║ ╠═╣║║║║║╣ 
-╩  ╩╚═╚═╝╚╝╚═╝ ╩   ╩ ╩╩═╝╚═╝╚═╝╩╚═╩ ╩ ╩ ╩╩ ╩╩╚═╝ :
+# Projet_Algo.Guardia
+╔═╗╦═╗╔═╗ ╦╔═╗╔╦╗  ╔═╗╦  ╔═╗╔═╗╦═╗╦╔╦╗╦ ╦╔╦╗╦╔═╗<br>
+╠═╝╠╦╝║ ║ ║║╣  ║   ╠═╣║  ║ ╦║ ║╠╦╝║ ║ ╠═╣║║║║║╣ <br>
+╩  ╩╚═╚═╝╚╝╚═╝ ╩   ╩ ╩╩═╝╚═╝╚═╝╩╚═╩ ╩ ╩ ╩╩ ╩╩╚═╝ :<br>
 
-Création de programme permettant de gérer des produits, des utilisateurs
+Création de programme permettant de gérer des produits,<br> des utilisateurs
 Avec un menu interactif et plusieurs autres fonctions
 
-# +--------------------------------------------------+
-# | 1. [+]Ajouter un Produit                         |
+ +--------------------------------------------------+
+###### | 1. [+]Ajouter un Produit                         |
 # | 2. [-]Supprimer un Produit                       |
 # | 3. Rechercher un Produit                         |
 # | 4. Afficher tous les Produits                    |
