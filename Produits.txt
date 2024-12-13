@@ -7,3 +7,4 @@ Casques,35.0,25
 Crayons,5.5,60
 Gourde,18.2,40
 Livres,9.99,10
+eau,1.0,28

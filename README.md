@@ -1,16 +1,16 @@
 # Projet_Algo.Guardia
 
-Création de programme permettant de gérer des produits,<br> des utilisateurs
+Création de programme permettant de gérer des produits,\n des utilisateurs
 Avec un menu interactif et plusieurs autres fonctions
 
-+--------------------------------------------------+<br>
-| 1. [+]Ajouter un Produit                         |<br>
-| 2. [-]Supprimer un Produit                       |<br>
-| 3. Rechercher un Produit                         |<br>
-| 4. Afficher tous les Produits                    |<br>
-| 5. Trier les Produits                            |<br>
-| s. Sauvegarder les produits                      |<br>
-| 6. [+]Ajouter un utilisateur                     |<br>
-| 7. [-]Supprimer un utilisateur                   |<br>
-+--------------------------------------------------+
+ +--------------------------------------------------+\n
+ | 1. [+]Ajouter un Produit                         |\n
+ | 2. [-]Supprimer un Produit                       |\n
+ | 3. Rechercher un Produit                         |\n
+ | 4. Afficher tous les Produits                    |\n
+ | 5. Trier les Produits                            |\n
+ | s. Sauvegarder les produits                      |\n
+ | 6. [+]Ajouter un utilisateur                     |\n
+ | 7. [-]Supprimer un utilisateur                   |\n
+ +--------------------------------------------------+
 

@@ -17,7 +17,7 @@ def create_produit():
 
 # Ajout de produit au fichier produit.txt
 def add_produit(nom, prix, quantité):
-    with open("Produit.txt", 'a') as produit: 
+    with open("Produits.txt", 'a') as produit: 
         produit.write(f"{nom},{prix},{quantité}\n")
         
         

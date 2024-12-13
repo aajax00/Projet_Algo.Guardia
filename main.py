@@ -54,46 +54,61 @@ def menu():
             
         # Supprimer un Produit
         elif choix == "2":
-            produits = load_produits()
+            dataf = load_produits()
             nom = input(f"{RED}Nom du produit a supprimer: {END}")
-            produit = search_produit(produits, nom)
-            if produit:
+            dataf_search = search_produit(dataf, nom)
+            if not dataf_search.empty:
                 supp_produit(nom)
-                print(f"{GREEN}Produit supprimé !{END}")
+                print(f"\n{GREEN}Produit supprimé !{END}")
             else:
-                print(f"{RED}Produit introuvable !{END}")
+                print(f"\n{RED}Produit introuvable !{END}")
         
-        # Rechercher un Produit    
+        # Rechercher un Produit  
         elif choix == "3":
-            produits = load_produits()
+            dataf = load_produits()
             nom = input(f"{GREEN}Nom du produit à chercher: {END}")
-            print(f"\n{BLUE}s. Recherche Sequentielle\nb. Recherche Binaire{END}")
-            method = input(f"{BLUE}Choisissez une methode de recherche (s ou b): {END}")
-            if method == "s":
-                recherche = search_produit(produits, nom)
-                if recherche:
-                    print(f"{GREEN}Produit trouvé : {END}{recherche}")
-                else:
-                    print(f"{RED}Produit non trouvé.{END}")
-            elif method == "b":
-                recherche = binaire(produits, nom)
-                if recherche:
-                    print(f"{GREEN}Produit trouvé avec la methode Binaire : \n{END}{recherche}")
-                else:
-                    print(f"{RED}Produit non trouvé avec la methode Binaire.{END}")
+            produit = search_produit(dataf, nom)
+            if not dataf.empty:
+                print(f"{GREEN}Produit trouvé : {END}\n{produit}")
             else:
-                print(f"{RED}Méthode invalide !{END}")
-            while True:  # reoiur au menu
-                partir = input(f"\nAppuyez sur {RED}E{END} pour quitter : ").lower()
+                print(f"{RED}Produit non trouvé.{END}")
+            while True:  
+                partir = input(f"\nPressez {RED}E{END} pour quitter : ").lower()
                 if partir == "e":
-                    print(f"{GREEN}Retour au menu principale.{END}\n")
-                    time.sleep(1)
-                    return menu()
+                    print(f"{GREEN}Retour au menu principale.{END}")
+                time.sleep(1)
+                return menu()
+        #########################################################################################
+        # elif choix == "3":
+        #     dataf = load_produits()
+        #     nom = input(f"{GREEN}Nom du produit à chercher: {END}")
+        #     print(f"\n{BLUE}s. Recherche Sequentielle\nb. Recherche Binaire{END}")
+        #     method = input(f"{BLUE}Choisissez une methode de recherche (s ou b): {END}")
+        #     if method == "s":
+        #         recherche = search_produit(dataf, nom)
+        #         if recherche:
+        #             print(f"{GREEN}Produit trouvé : {END}{recherche}")
+        #         else:
+        #             print(f"{RED}Produit non trouvé.{END}")
+        #     elif method == "b":
+        #         recherche = binaire(dataf, nom)
+        #         if recherche:
+        #             print(f"{GREEN}Produit trouvé avec la methode Binaire : \n{END}{recherche}")
+        #         else:
+        #             print(f"{RED}Produit non trouvé avec la methode Binaire.{END}")
+        #     else:
+        #         print(f"{RED}Méthode invalide !{END}")
+        #     while True:  # reoiur au menu
+        #         partir = input(f"\nAppuyez sur {RED}E{END} pour quitter : ").lower()
+        #         if partir == "e":
+        #             print(f"{GREEN}Retour au menu principale.{END}\n")
+        #             time.sleep(1)
+        #             return menu()
                 
         # Afficher les Produits   
         elif choix == "4":
             produits = load_produits()
-            if produits:
+            if not produits.empty:
                 aff_produits(produits)
             else:
                 print(f"{RED}Aucun produit disponible.{END}")
@@ -105,16 +120,13 @@ def menu():
             key = input(f"{GREEN}Trier par {END}{JAUNE}'prix'{END}{GREEN} ou {END}{BLUE}'quantité': {END}").lower()
             algo = input(f"{BLUE}Algorithme ('bulle' ou 'rapide'): {END}").lower()
             if key in ["prix", "quantité"]:
-                if algo == "bulle":
-                    produits = tri_bulle(produits, key)
-                elif algo == "rapide":
-                    produits = tri_rapide(produits, key)
+                if algo in ["bulle", "rapide"]:
+                    produits = sort_produit(algo, key)
+                    print(f"{produits}")
+                    print(f"{GREEN}Produits triés avec succès !\n{END}")
                 else:
                     print(f"{RED}Algorithme invalide !{END}")
-                    continue
-                print(f"{GREEN}Produits triés avec succès !\n{END}")
-                for p in produits:
-                    print(f"{p['nom']},{JAUNE}{p['prix']}€{END},{BLUE}{p['quantité']}{END}")   
+                    continue 
             else:
                 print(f"{RED}Clé de tri invalide !{END}")
                 
@@ -131,7 +143,7 @@ def menu():
         elif choix == "s":
             produits = load_produits()
             save_produit(produits)
-            print(f"{GREEN}Données sauvegardeés avec seccès dans le fichier.{END}")
+            print(f"{GREEN}Données sauvegardeés avec succès.{END}")
             
             while True:  # reoiur au menu
                 partir = input(f"\nAppuyez sur {RED}E{END} pour quitter : ").lower()
