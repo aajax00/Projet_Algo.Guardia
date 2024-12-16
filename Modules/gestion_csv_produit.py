@@ -1,5 +1,5 @@
+from Assets.br_charge import *
 import time
-import sys
 import pandas as pnds
 import os
 
@@ -11,7 +11,7 @@ END = "\033[0m"
 
 # creation de produit  
 def create_produit():
-    file_path = "Produits.csv"
+    file_path = "./data/Produits.csv"
     if not os.path.exists(file_path):
         produit_dataf = pnds.DataFrame(columns=["nom", "prix", "quantité"])
         produit_dataf.to_csv(file_path, index=False)
@@ -35,7 +35,7 @@ def add_produit(nom, prix, quantité):
 # charger les produit depuis le csv
 def load_produits():
     try:
-        return pnds.read_csv("Produits.csv")
+        return pnds.read_csv("./data/Produits.csv")
     except FileNotFoundError:
         return pnds.DataFrame(columns=["nom", "prix", "quantité"])
 
@@ -50,7 +50,7 @@ def supp_produit(nom):
 
 # sauvegarder les produits
 def save_produit(dataf):
-    dataf.to_csv("Produits.csv", index=False)
+    dataf.to_csv("./data/Produits.csv", index=False)
             
             
 # recherche de produit par nom
@@ -86,12 +86,3 @@ def aff_produits(produits):
             print(f"{GREEN}Vous quittez la liste des produits.{END}")
             time.sleep(1)
             return
-
-
-# barre de chargement
-def br_charge():
-    for i in range(1, 21):
-        sys.stdout.write(f"\rChargement : [{GREEN}{'#' * i}{'.' * (20 - i)}{END}] {GREEN}{i * 5}%{END}")
-        sys.stdout.flush()
-        time.sleep(0.04)
-    print()

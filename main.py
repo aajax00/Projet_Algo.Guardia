@@ -1,6 +1,7 @@
-from gestion_produits import *
+from Modules.gestion_produits import *
 # from gestion_utilisateur import *
-from gestion_csv_produit import *
+from Modules.gestion_csv_produit import *
+from Modules.gestion_utilisateur import *
 import time
 
 GREEN = "\033[1;32m"
@@ -113,7 +114,7 @@ def menu():
             else:
                 print(f"{RED}Aucun produit disponible.{END}")
                 
-                                
+
         # Trier les Produits
         elif choix == "5":
             produits = load_produits()
@@ -154,6 +155,7 @@ def menu():
             
         # ajouter utilisateur
         elif choix == "6":
+            create_userfile()
             nom = input(f"{GREEN}Nom de l'utilisateur: {END}")
             mdp = input(f"{GREEN}Mot de passe: {END}")
             add_users(nom, mdp)
@@ -167,6 +169,8 @@ def menu():
         
         else:
             print(f"{RED}Choix invalide. Réessayez.{END}")
+            choix = input(f"{BLUE}CHOISISSEZ UNE OPTION: {END}")
+
             
 if __name__ == "__main__":
     menu()
