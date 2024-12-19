@@ -1,2 +1,4 @@
-nom,mot_de_passe,sel
-Clement,862c33fba8e9c0d58682840d5b6d779c2e9f702bd09d9c62455086dfdad11c77,b'\xe8p\x13\xb5\xf1\x1b\xa5\x05\x84\r\xba5\xe7o.\x86'
+user_id,nom,mot_de_passe,sel
+1,ajax,c32cbfe1f5333cc7b82be6711975a1b72ca7053d976ddb6f2402f9bcc11137e7,b'\xe5\xa44\xe0\x95&\x902l\x1b\x89\x0e\x93\x9c\xfb\xe7'
+2,titi,5ab6dd4ef9171ecb8e30366398d0341aea9291021ee205cde70bed227da6d307,b'\xf6\xefz]/\x89w\x9f6\xae\x1bN\x9b\xd3\xcbs'
+3,kris,df77d4e5699d1a9334ad2a3ceb958536e3d6a63d566a16667c5c9b351d8154cd,b'_]\xe8\xe6\xd7_\x81\x0e\x06\x03`\x0b\xb8\x06^g'

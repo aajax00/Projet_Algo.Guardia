@@ -1,4 +1,4 @@
-from Assets.br_charge import *
+# from Assets.br_charge import *
 import time
 import pandas as pnds
 import os
@@ -13,21 +13,21 @@ END = "\033[0m"
 def create_produit():
     file_path = "./data/Produits.csv"
     if not os.path.exists(file_path):
-        produit_dataf = pnds.DataFrame(columns=["nom", "prix", "quantité"])
+        produit_dataf = pnds.DataFrame(columns=["nom", "prix", "quantité", "user_id"])
         produit_dataf.to_csv(file_path, index=False)
         print(f"{GREEN}Le fichier à eté cree avec succès{END}")
     else:
         print(f"{GREEN}-- Produit.csv --{END}\n{BLUE}Chargement du fichier 💾... !{END}")
         produit_dataf = pnds.read_csv(file_path)
-        br_charge()
+        # br_charge()
         
 
 
 
 # Ajout de produit au fichier csv
-def add_produit(nom, prix, quantité):
+def add_produit(nom, prix, quantité, user_id):
     dataf = load_produits()
-    dataf = dataf._append({"nom": nom, "prix": prix, "quantité": quantité}, ignore_index=True)
+    dataf = dataf._append({"nom": nom, "prix": prix, "quantité": quantité, "user_id":user_id}, ignore_index=True)
     save_produit(dataf)
 
         
@@ -37,12 +37,12 @@ def load_produits():
     try:
         return pnds.read_csv("./data/Produits.csv")
     except FileNotFoundError:
-        return pnds.DataFrame(columns=["nom", "prix", "quantité"])
+        return pnds.DataFrame(columns=["nom", "prix", "quantité", "user_id"])
 
 
 
 # supprimer un produit dans csv
-def supp_produit(nom):
+def supp_produit(nom, user_id):
     dataf = load_produits()
     dataf = dataf[dataf["nom"] != nom]
     save_produit(dataf)
@@ -75,10 +75,10 @@ def sort_produit(algo, key):
 
 # Afficher les Produits
 def aff_produits(produits):
-    br_charge()
-    print(f"\n{GREEN}_____Liste des produits____:{END}\n")
+    # br_charge()
+    print(f"\n{GREEN}===== MES PRODUITS ====:{END}\n")
     dataf = pnds.DataFrame(produits)
-    print(dataf[['nom' ,'prix' ,'quantité']].to_string(index=False))
+    print(dataf[['nom' ,'prix' ,'quantité', 'user_id']].to_string(index=False))
         
     while True:  
         partir = input(f"\nPressez {RED}E{END} pour quitter : ").lower()
@@ -86,3 +86,5 @@ def aff_produits(produits):
             print(f"{GREEN}Vous quittez la liste des produits.{END}")
             time.sleep(1)
             return
+        
+        
