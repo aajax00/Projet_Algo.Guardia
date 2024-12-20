@@ -42,7 +42,7 @@ def load_produits():
 
 
 # supprimer un produit dans csv
-def supp_produit(nom, user_id):
+def supp_produit(nom):
     dataf = load_produits()
     dataf = dataf[dataf["nom"] != nom]
     save_produit(dataf)
@@ -54,7 +54,10 @@ def save_produit(dataf):
             
             
 # recherche de produit par nom
-def search_produit(dataf, nom):
+def search_produit(dataf, nom, user_id=None):
+    if user_id:
+        dataf = dataf[dataf["user_id"] == user_id]
+    
     recherche = dataf[dataf["nom"].str.lower().str.contains(nom, na=False)]
     return recherche
 
@@ -69,22 +72,5 @@ def sort_produit(algo, key):
         dataf = dataf.sort_values(by=key, kind="quicksort")
     save_produit(dataf)
     return dataf
-
-
-
-
-# Afficher les Produits
-def aff_produits(produits):
-    # br_charge()
-    print(f"\n{GREEN}===== MES PRODUITS ====:{END}\n")
-    dataf = pnds.DataFrame(produits)
-    print(dataf[['nom' ,'prix' ,'quantité', 'user_id']].to_string(index=False))
-        
-    while True:  
-        partir = input(f"\nPressez {RED}E{END} pour quitter : ").lower()
-        if partir == "e":
-            print(f"{GREEN}Vous quittez la liste des produits.{END}")
-            time.sleep(1)
-            return
         
         
