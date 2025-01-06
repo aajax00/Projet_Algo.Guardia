@@ -64,13 +64,21 @@ def search_produit(dataf, nom, user_id=None):
 
 
 # tri a bulles / rapide csv
-def sort_produit(algo, key):
+def sort_produit(algo, key, user_id):
     dataf = load_produits()
+    mes_produits = dataf[dataf["user_id"] == user_id]
+    if mes_produits.empty:
+        print(f"{RED}Vous n'avez aucun produit à trier.{END}")
+        return mes_produits
+    
     if algo == 'bulle':
-        dataf = dataf.sort_values(by=key)
+        mes_produits = mes_produits.sort_values(by=key)
     elif algo == 'rapide':
-        dataf = dataf.sort_values(by=key, kind="quicksort")
+        mes_produits = mes_produits.sort_values(by=key, kind="quicksort")
+    else:
+        print(f"{RED}Algorithme de tri invalide !{END}")
+        return mes_produits
     save_produit(dataf)
-    return dataf
+    return mes_produits
         
         

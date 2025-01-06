@@ -1,7 +1,6 @@
 from Modules.gestion_utilisateur import *
 from Modules.gestion_csv_produit import *
 from Modules.authentification import *
-from Modules.api import *
 import getpass
 import time
 import os
@@ -47,7 +46,7 @@ def menu_principal():
             userid = login_user(username, mdp)
             instance()
             if userid:
-                session(userid, username)
+                session(userid, username, mdp)
             
         
         
@@ -103,23 +102,29 @@ def menu_principal():
         # print("+--------------------------------------------------+")
 
 
-def session(user_id, username):
+def session(user_id, username, mdp):
     instance()
-    # compromis = mdp_compromis()
-    # global nombre_fois_compromis
+    compromis = mdp_compromis(mdp)
+    
     while True:
-        print(f"\n{GREEN}====== SESSION UTILISATEUR {END}{JAUNE}👤 : [{username}]{END}{GREEN} ====={END}")
-        print("+--------------------------------------------------+")
-        print("| 1. Gérer mes produits                            |")
-        print("| 2. Gérer mon compte                              |")
-        print("+--------------------------------------------------+")
-        print(f"\nd. {RED}DECONNEXION{END}\n")
+        if compromis[0] == True :    
+            print(f"\n{GREEN}====== SESSION UTILISATEUR {END}{JAUNE}👤 : [{username}]{END}{GREEN} ====={END}")
+            print("+--------------------------------------------------+")
+            print("| 1. Gérer mes produits                            |")
+            print("| 2. Gérer mon compte                              |")
+            print("+--------------------------------------------------+")
+            print(f"{JAUNE}Votre mot de passe a été compromis {END}{RED}{compromis[1]}{END} {JAUNE}fois!{END}")
+            print(f"{JAUNE}Modification conseillez !{END}")
+            print(f"\nd. {RED}DECONNEXION{END}\n")
+        else:
+            print(f"\n{GREEN}====== SESSION UTILISATEUR {END}{JAUNE}👤 : [{username}]{END}{GREEN} ====={END}")
+            print("+--------------------------------------------------+")
+            print("| 1. Gérer mes produits                            |")
+            print("| 2. Gérer mon compte                              |")
+            print("+--------------------------------------------------+")
+            print(f"\nd. {RED}DECONNEXION{END}\n")
+            
         choix = input(f"{BLUE}CHOISISSEZ UNE OPTION: {END}")
-        
-        # if compromis:
-        #     print(f"{RED} Ce mot de passe a été compromis {nombre_fois_compromis} fois ! {END}")
-        # else :
-        #     print(f"{GREEN} Ce mot de passe n'est pas compromis {END}")
         
         if choix == "d":
             print(f"{RED}\nDéconnexion de la session...{END} {JAUNE}{username}{END}")
@@ -213,6 +218,25 @@ def menu_produit(user_id, username):
                 time.sleep(1)
                 instance()
                 return menu_produit(user_id, username)
+            
+            
+        # Afficher les Produits   
+        elif choix == "4":
+            produits = load_produits()
+            mes_produits = produits[produits["user_id"] == user_id]
+            if not mes_produits.empty:
+                print(f"\n{GREEN}===== MES PRODUITS ====:{END}\n")
+                print(mes_produits[['nom' ,'prix' ,'quantité']].to_string(index=False))
+            else:
+                print(f"{RED}Vous n'avez aucun produit disponible.{END}")
+                
+            while True:  
+                quitter = input(f"\nPressez {RED}E{END} pour quitter : ").lower()
+                if quitter == "e":
+                    print(f"{GREEN}Vous quittez la liste des produits.{END}")
+                    time.sleep(1)
+                    instance()
+                    return menu_produit(user_id, username)
                 
     
     
@@ -221,11 +245,20 @@ def menu_produit(user_id, username):
             produits = load_produits()
             key = input(f"{GREEN}Trier par {END}{JAUNE}'prix'{END}{GREEN} ou {END}{BLUE}'quantité': {END}").lower()
             algo = input(f"{BLUE}Algorithme ('bulle' ou 'rapide'): {END}").lower()
-            if key in ["prix", "quantité"]:
+            if key in ["prix"]:
                 if algo in ["bulle", "rapide"]:
-                    produits = sort_produit(algo, key)
-                    print(f"{produits}")
-                    print(f"{GREEN}Produits triés avec succès !\n{END}")
+                    mes_produits = sort_produit(algo, key, user_id)
+                    print(mes_produits[['nom' ,'prix' ,'quantité']].to_string(index=False))
+                    print(f"{GREEN}Produits triés par PRIX avec succès !\n{END}")
+                else:
+                    print(f"{RED}Algorithme invalide !{END}")
+                    continue 
+                
+            if key in ["quantité"]:
+                if algo in ["bulle", "rapide"]:
+                    mes_produits = sort_produit(algo, key, user_id)
+                    print(mes_produits[['nom' ,'prix' ,'quantité']].to_string(index=False))
+                    print(f"{GREEN}Produits triés par QUANTITE avec succès !\n{END}")
                 else:
                     print(f"{RED}Algorithme invalide !{END}")
                     continue 
@@ -251,29 +284,15 @@ def menu_produit(user_id, username):
             while True:  # reoiur au menu
                 partir = input(f"\nAppuyez sur {RED}E{END} pour quitter : ").lower()
                 if partir == "e":
-                    print(f"{GREEN}Retour au menu principale.{END}\n")
+                    print(f"{GREEN}Retour au menu de gestion des produits.{END}\n")
                     time.sleep(1)
                     instance()
                     return menu_produit(user_id, username)
 
-        
-        # Afficher les Produits   
-        elif choix == "4":
-            produits = load_produits()
-            mes_produits = produits[produits["user_id"] == user_id]
-            if not mes_produits.empty:
-                print(f"\n{GREEN}===== MES PRODUITS ====:{END}\n")
-                print(mes_produits[['nom' ,'prix' ,'quantité']].to_string(index=False))
-            else:
-                print(f"{RED}Vous n'avez aucun produit disponible.{END}")
                 
-            while True:  
-                quitter = input(f"\nPressez {RED}E{END} pour quitter : ").lower()
-                if quitter == "e":
-                    print(f"{GREEN}Vous quittez la liste des produits.{END}")
-                    time.sleep(1)
-                    instance()
-                    return menu_produit(user_id, username)
+        else: 
+            print(f"{RED}Choix invalide. Réessayez.{END}")
+            choix = input(f"{BLUE}CHOISISSEZ UNE OPTION: {END}")
 
         
 
@@ -292,12 +311,17 @@ def menu_user(user_id, username):
         if choix == "r":
             print(f"{RED}Retour au menu de session...{END}")
             time.sleep(1)
+            instance()
             break
         
         elif choix == "1":
             print(f"{GREEN}=== MODIFIER MES INFORMATIONS ==={END}")
             mdp_actuel = getpass.getpass(f"{BLUE}Entrez votre mot de passe actuel: {END}")
             username = modif_info_user(username, mdp_actuel)
+            break
+        
+            
+        
         
         elif choix == "2":
             print(f"{RED}=== SUPPRIMER MON COMPTE ==={END}")

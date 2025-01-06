@@ -1,5 +1,6 @@
 # from Assets.br_charge import *
 from .gestion_csv_produit import *
+from Modules.api import *
 import pandas as pnd
 import hashlib
 import os
@@ -63,6 +64,8 @@ def add_users(username, mdp):
     user_id = users["user_id"].max() + 1 if not users.empty else 1
     hashed_mdp, salt = hash_mdp(mdp)
     users = users._append({"user_id": user_id, "username": username, "mot_de_passe": hashed_mdp, "sel": salt}, ignore_index=True)
+    # mdp_connect(mdp)
+    time.sleep(2.5)
     save_users(users)    
     print(f"{GREEN}\nUtilisateur ajouté avec succès{END}")
 
@@ -119,7 +122,7 @@ def modif_info_user(username, mdp_actuel):
     # Vérification si le mot de passe est compromis
     if nouveau_mdp in mdp_compromis:
         print(f"{RED}\nLe nouveau mot de passe fait partie d'une basse de donneé compromise.{END}")
-        print(f"{RED}Veuiilez en utiliser un autre.{END}")
+        print(f"{RED}Veuiilez en utiliser un autre !{END}")
         time.sleep(3)
         instance()
         return username
@@ -141,5 +144,6 @@ def modif_info_user(username, mdp_actuel):
         
     save_users(users)
     print(f"{GREEN}\nVos informations ont été mises à jour avec succès !{END}")
+    time.sleep(1.5)
     instance()
     return username
