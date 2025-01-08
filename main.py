@@ -43,18 +43,39 @@ def menu_principal():
             print(f"\n{GREEN}=== FORMULAIRE DE CONNEXION ==={END}\n")
             username = input(f"{BLUE}Nom d'utilisateur: {END}")
             mdp = getpass.getpass(f"{BLUE}Mot de passe: {END}")
-            userid = login_user(username, mdp)
+            result = login_user(username, mdp)
             instance()
-            if userid:
-                session(userid, username, mdp)
+            if is_admin(username, mdp):
+                time.sleep(1.5)
+                # Animation de chargement avec les symboles
+                print(f"{JAUNE}Connections au Panel Administrateur", end="")
+                sys.stdout.flush()  # Pour s'assurer que le texte est imprimé immédiatement
+                duration = 1.2
+                symbols = ['/', '-', '\\', '|']
+                start_time = time.time()
+                # Boucle d'animation
+                while time.time() - start_time < duration:
+                    for symbol in symbols:
+                        # Afficher "chargement..." avec le symbole actuel
+                        sys.stdout.write(f"\rConnections au Panel Administrateur...... {symbol}")
+                        sys.stdout.flush()
+                        time.sleep(0.1)
+                admin_panel(username)
+            elif result:
+                session(result, username, mdp)
+            else:
+                print(f"{RED}Échec de la connexion. Veuillez réessayer.{END}")
+            
             
         
         
         elif choix == "2":
             create_userfile()
+            print(f"\n{GREEN}=== INSCRIPTION ==={END}\n")
+            email = input(f"{BLUE}Adresse email: {END}")
             nom = input(f"{BLUE}Nom d'utilisateur: {END}")
             mdp = getpass.getpass(f"{BLUE}Mot de passe: {END}")
-            add_users(nom, mdp)
+            add_users(nom, mdp, email, role="user")
             time.sleep(1.8)
             instance()
             
@@ -62,7 +83,89 @@ def menu_principal():
             print(f"{RED}Choix invalide. Réessayez.{END}")
             choix = input(f"{BLUE}CHOISISSEZ UNE OPTION: {END}")
 
+def admin_panel(username):
+    instance()
+    # if not is_admin(username, mdp):
+    #     print(f"{RED}Vous n'êtes pas un administrateur, accès refusé.{END}")
+    #     return
+    
+    while True:
+        print(f"\n{RED}====== PANNEAU D'ADMINISTRATION{END} {JAUNE}👤 : [ADMIN]{END}{RED} ====={END}")
+        print(f"{GREEN}+--------------------------------------------------+{END}")
+        print(f"{GREEN}| 1. [+]Ajouter un utilisateur                     |{END}")
+        print(f"{GREEN}| 2. {END}{RED}[-]Supprimer un utilisateur{END}{GREEN}                   |{END}")
+        print(f"{GREEN}| 3. Afficher tous les utilisateurs                |{END}")
+        print(f"{GREEN}| 4. [=]Rechercher un utilisateur                  |{END}")
+        print(f"{GREEN}|{END}{RED}--------------------------------------------------{END}{GREEN}|{END}")
+        print(f"{GREEN}| 5. [+]Ajouter un produit pour un utilisateur     |{END}")
+        print(f"{GREEN}| 6. {END}{RED}[-]Supprimer un produit pour un utilisateur{END}{GREEN}   |{END}")
+        print(f"{GREEN}| 7. [=]Rechercher un Produit                      |{END}")
+        print(f"{GREEN}| 8. Afficher les produits d'un utilisateur        |{END}")
+        print(f"{GREEN}| 9. Afficher tous les Produits                    |{END}")
+        print(f"{GREEN}| 10. Trier les Produits                           |{END}")
+        print(f"{GREEN}+--------------------------------------------------+{END}")
+        print(f"\nd. {RED}DECONNEXION{END}\n")
+        choix = input(f"{BLUE}CHOISISSEZ UNE OPTION: {END}")
+        
+        if choix == "d":
+            print(f"{RED}Déconnexion ...{END}")
+            time.sleep(1)
+            instance()
+            break
+        
+        # Ajouter un utilisateur
+        elif choix == "1":
+            print(f"\n{GREEN}=== CREATION D'UTILISATEUR ==={END}\n")
+            username = input(f"{BLUE}Entrez le nom d'utilisateur: {END}")
+            mdp = getpass.getpass(f"{BLUE}Attribuez un mot de passe: {END}")
+            role = input(f"{BLUE}Donnez lui un rôle (admin/user): {END}")
+            add_users(username, mdp, role)
+            time.sleep(1.8)
+            instance()
+        
+        # Supprimer un utilisateur
+        elif choix == "2":
+            username = input(f"{BLUE}Entrez le nom d'utilisateur à supprimer: {END}")
+            supp_user_admin(username)
             
+        # Afficher tous les utilisateurs
+        elif choix == "3":
+            aff_all_user()
+            
+        # Rechercher un utilisateur
+        elif choix == "4":
+            username = input(f"{BLUE}Entrez le nom d'utilisateur à chercher: {END}")
+            search_user_admin(username)
+            
+        # Ajouter un produit utilisateur
+        elif choix == "5":
+            add_produit_admin()
+            
+        # Supprimer un produit utilisateur
+        elif choix == "6":
+            supp_produit_admin()
+            
+        # Rechercher un produit utilisateur  
+        elif choix == "7":
+            search_produit_admin()
+            
+        # Afficher les Produits d'un utilisateur spécifique
+        elif choix == "8":
+            username = input(f"{GREEN}Entrez le nom de l'utilisateur dont vous souhaitez voir les produits: {END}")
+            aff_produits_admin(username)
+                
+        # Afficher tous les produits
+        elif choix == "9":
+            afficher_tous_les_produits_admin()
+            
+        # Trier les produits
+        elif choix == "10":
+            trier_produits_admin()
+
+        else:
+            print(f"{RED}Choix invalide.{END}")
+            
+                
 # -------------------------------------------------------------------    
 # def menu_produit():
 #     print(f"{JAUNE}{art}{END}\n")
@@ -114,7 +217,7 @@ def session(user_id, username, mdp):
             print("| 2. Gérer mon compte                              |")
             print("+--------------------------------------------------+")
             print(f"{JAUNE}Votre mot de passe a été compromis {END}{RED}{compromis[1]}{END} {JAUNE}fois!{END}")
-            print(f"{JAUNE}Modification conseillez !{END}")
+            print(f"{JAUNE}Modification conseillée ⚠️ !{END}")
             print(f"\nd. {RED}DECONNEXION{END}\n")
         else:
             print(f"\n{GREEN}====== SESSION UTILISATEUR {END}{JAUNE}👤 : [{username}]{END}{GREEN} ====={END}")
@@ -151,7 +254,7 @@ def menu_produit(user_id, username):
         print("+--------------------------------------------------+")
         print("| 1. [+]Ajouter un Produit                         |")
         print(f"| 2. {RED}[-]Supprimer un Produit{END}                       |")
-        print("| 3. Rechercher un Produit                         |")
+        print("| 3. [=]Rechercher un Produit                      |")
         print("| 4. Afficher tous les Produits                    |")
         print("| 5. Trier les Produits                            |")
         print("| s. Sauvegarder les produits                      |")
@@ -225,7 +328,7 @@ def menu_produit(user_id, username):
             produits = load_produits()
             mes_produits = produits[produits["user_id"] == user_id]
             if not mes_produits.empty:
-                print(f"\n{GREEN}===== MES PRODUITS ====:{END}\n")
+                print(f"\n{GREEN}=== MES PRODUITS ===:{END}\n")
                 print(mes_produits[['nom' ,'prix' ,'quantité']].to_string(index=False))
             else:
                 print(f"{RED}Vous n'avez aucun produit disponible.{END}")
@@ -318,7 +421,7 @@ def menu_user(user_id, username):
             print(f"{GREEN}=== MODIFIER MES INFORMATIONS ==={END}")
             mdp_actuel = getpass.getpass(f"{BLUE}Entrez votre mot de passe actuel: {END}")
             username = modif_info_user(username, mdp_actuel)
-            break
+            return menu_principal()
         
             
         

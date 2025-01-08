@@ -1,19 +1,3 @@
-user_id,username,mot_de_passe,sel
-3,nass,ff7a407df441a263eb207b7b3c380f825653b4c707ffffb02318e18a1bc8c6ed,b'#\xa5*b#k\xc9(\x17\n\xb6\x84\x96\x7ftr'
-4,za,6c67be20e4968249c3be6c3be8c14901636645aa27f0822ada4b4391d0131757,b'\x9e\xe8\xae\xecY4\xfa_\xff\x8a\xf1A\xba\xb9\xe7\x89'
-5,vex,daa3b2f0f01ec01a16ffe9707a26de4dd943ed6ea8391c50c6de984129f1eec3,b'\xe9\xdd\xce\x9e\x14\xe7H\x8aN\xa0\x7f\x9d\x0e\xf7D\x9e'
-6,aa,9350dac49d507c67cd042268d5d57968c54da494072847fd379a6ba8d1dab6ce,b'\x8a[k\x14\xe7\xe6\xbbo\xc7\xa62\x18\x0b\xedY\x80'
-7,qq,400d6391647e133dd581095d8a81e3b7dbdae60d57da43734fd8ebe0935c9854,"b'a\xad\xf1\xea\x1c\x80\x16\xac[""\x8ai\x9a\x0c\x11\xa5'"
-8,ae,90e0b0f3d5dc1158729b72e1c045e08eb6387c32da6bf33f434d4b1ae1576fd5,b'0\x0c@\xb8\xb5\x9c\xf1sXe\xf6\xd9\xe61 \xb8'
-9,dd,f6e283417a09e91a69f66871a7c85778ad89a5cc8cb654b3c1800328aeb4fe3a,b'Xh\x9b\x0e\x94\x17{tm*\xda\xde\x8aM\xd4`'
-10,titi,542fa91a9cbee0ba6dcfe1a4b2bce91efac5fbb90de3a29378e6ec3ce759e8ac,"b'\xf3sB\\8\xc4\x07\xddt\x1b%\xc6,*\x19_'"
-11,test,85720b8600f8f118a42447a992ff0245e4a1b17a753feb2af3ed22b1af1cfaa4,b'\xff\\t\x8d\x93\xfc2\x14Le\xe9VAEf\x92'
-12,ajax,f89bd6a307801d8d223cd6818737ece4ea2f02820a31c941d629b45ca82d1818,b'?)\xa7\x08\x7f\x87\xd7\xea\xe7=SGug\xed\x03'
-13,aj,774ff1ea2d10890c851b3ccaa705bcf3ca6be7675a8fe1e9cf4d029f4824f42f,b'\xdbL\xbc\x06\xa8\xdaF\x8b\x8fA\xb1\xd8jA\xa0\xb6'
-14,az,189310858d3705dad893232fea96b3eae9cfc266d3bcc3734fdfee2314c01fba,b'\xec\r\xfb\x1b\x90\x11W\x9eA\\\xde\x04\xfe\x8dL\x1e'
-15,ajax01,8dcb3bdb511495b180d2afd93bbf5d3ce1eacea022c0808f73e391dc293c5972,b'\x8b\x04\xc3\xc8\x07ik\xd3\xd5m\n\xac\x94\xc4pS'
-16,pro,c995edc7fcd2f6a72b5cbfc7db77e86076a1065673de8b26e97f29aa27db96a9,b'\xa0\x9d\xdc \x06\xb3q?\xa4\x9a\xd0\xea\x96\x0f=1'
-17,coco,d73a55edfc5a0fa349a1ceea411a62dcc88e81b0b7e9a4660c437e172361badf,b'\x0c_\xc2<\xe1\x11\x9c\xf2\xa0\xe8\xb0\x0eg\xcd8\xd5'
-18,sisi,36d4011aa2c110324a852f043fdc9b22c38e45b307415229d2e45f0d04299813,b'\xd5\xc9\xe6\xbc\x8f\xf8\x01\xcdZm\xdd\x85YD\xee\xcb'
-19,xan,470f170e9a1ad711ad7ec6bab32624093fb17ddd78dc70afd59990702b7ada66,b'\xd7V\xb6d.\xda\xf9\x82\xd3\xb2\x92M\x9ao?j'
-20,ar,49823c2d50dd8b718441c589a3fce22eea0af468abbbb60bc1e3cb95ec1982c2,b'\xcc\x9d\x92v\xdb&\x14\xe0\xad\xfb\xe8\xbc\xe1\x89\x89m'
+user_id,username,mot_de_passe,sel,role,email
+1,admin,72619b2646e3194c3e34fb4cc1f94b877abbba88aa96bcc48586c62e17bdd470,b'~.LC\xe3\x08)\x05\xc3z\xdf\x06\x84\xa6I\xbf',admin,vitide5926@outlook.com
+2,ajax-test,55f6a5bb683679f0ad2d4829846a97294b5dc494a619e2c215bb645630ae5a25,b'\xab\xe16\xaa\xa3b\x1b@>\xd0\xcf\x9b6\xa16\x06',user,usertest-algo@yopmail.com

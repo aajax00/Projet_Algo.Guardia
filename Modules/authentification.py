@@ -19,12 +19,21 @@ def login_user(username, mdp):
         return False
     
     user = user.iloc[0]
-    mdp_hashed, salt = user['mot_de_passe'], eval(user["sel"])
     
-    if hash_mdp(mdp, salt)[0] == mdp_hashed:
+    # Afficher les informations de l'utilisateur pour débogage
+    # print(f"Utilisateur trouvé : {user['username']}")
+    # print(f"Mot de passe stocké : {user['mot_de_passe']}")
+    # print(f"Salt utilisé : {eval(user['sel'])}")  # Assurez-vous que le salt est bien récupéré
+    
+    salt = eval(user["sel"])
+    mdp_hashed = user['mot_de_passe']
+    hashed_mdp_saisi, _ = hash_mdp(mdp, salt)
+    
+    if hashed_mdp_saisi == mdp_hashed:
         time.sleep(1.3)
         print(f"{GREEN}\nConnexion reussi{END}")
-        time.sleep(0.5)
+        time.sleep(0.5)   
+        
         # Animation de chargement avec les symboles
         print(f"{JAUNE}Chargement de la session", end="")
         sys.stdout.flush()  # Pour s'assurer que le texte est imprimé immédiatement
@@ -38,6 +47,9 @@ def login_user(username, mdp):
                 sys.stdout.write(f"\rChargement de la session... {symbol}")
                 sys.stdout.flush()
                 time.sleep(0.1)
+                
+        if user["user_id"] == 1:
+            return "admin"       
         return user["user_id"]
     else:
         print(f"{RED}\nMot de passe incorrect{END}")
