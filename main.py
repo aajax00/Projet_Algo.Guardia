@@ -1,6 +1,7 @@
 from Modules.gestion_utilisateur import *
 from Modules.gestion_csv_produit import *
 from Modules.authentification import *
+from Modules.messagecompromis import *
 import getpass
 import time
 import os
@@ -210,7 +211,8 @@ def session(user_id, username, mdp):
     compromis = mdp_compromis(mdp)
     
     while True:
-        if compromis[0] == True :    
+        if compromis[0] == True :
+            mail_mdp_compromis (user_id)    
             print(f"\n{GREEN}====== SESSION UTILISATEUR {END}{JAUNE}👤 : [{username}]{END}{GREEN} ====={END}")
             print("+--------------------------------------------------+")
             print("| 1. Gérer mes produits                            |")

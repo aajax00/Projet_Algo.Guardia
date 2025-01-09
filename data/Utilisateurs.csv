@@ -1,3 +1,6 @@
 user_id,username,mot_de_passe,sel,role,email
-1,admin,72619b2646e3194c3e34fb4cc1f94b877abbba88aa96bcc48586c62e17bdd470,b'~.LC\xe3\x08)\x05\xc3z\xdf\x06\x84\xa6I\xbf',admin,vitide5926@outlook.com
+1,admin,72619b2646e3194c3e34fb4cc1f94b877abbba88aa96bcc48586c62e17bdd470,"b'~.LC\\xe3\\x08)\\x05\\xc3z\\xdf\\x06\\x84\\xa6I\\xbf'",admin,agardien001@gmail.com
 2,ajax-test,55f6a5bb683679f0ad2d4829846a97294b5dc494a619e2c215bb645630ae5a25,b'\xab\xe16\xaa\xa3b\x1b@>\xd0\xcf\x9b6\xa16\x06',user,usertest-algo@yopmail.com
+3,az,65041a92404ea8cab3f5261f6ed68f9c13c8efe0c702c074bbd45a4a47a60971,b'\x1c\x0bL\xad@D\xcd\x8b\xaa\x14\xdb\xad\x0e\xcb\xe4\xe6',user,as@sas.com
+4,naomie,94776729697e9682d280bdcb165472601049ce3743115ec023c845eedec7ca3d,b'\xf9\xc2B\xc8`>1\xa24\xdc\x7f\x85\xb6\xea\xf4%',user,naomie@mail.com
+5,ae,6b380cc4bf290ec0e3a7cb26b3a8da18b096c626150ec9089f442eaeecd67cac,b'\x1f\xccL\xf1\x80sT\x85CaFw:\xf0\x91\xda',user,ae@mail.com
