@@ -26,16 +26,18 @@ def create_produit():
 
 # Ajout de produit au fichier csv
 def add_produit(nom, prix, quantité, user_id):
-    dataf = load_produits()
-    dataf = dataf._append({"nom": nom, "prix": prix, "quantité": quantité, "user_id":user_id}, ignore_index=True)
+    dataf = load_produits(user_id)
+    new_produit = {"nom": nom, "prix": prix, "quantité": quantité, "user_id":user_id}  
+    dataf = dataf._append(new_produit, ignore_index=True)
     save_produit(dataf)
 
         
         
 # charger les produit depuis le csv
-def load_produits():
+def load_produits(user_id):
     try:
-        return pnds.read_csv("./data/Produits.csv")
+        produits = pnds.read_csv("./data/Produits.csv")
+        return produits[produits["user_id"] == user_id]
     except FileNotFoundError:
         return pnds.DataFrame(columns=["nom", "prix", "quantité", "user_id"])
 
