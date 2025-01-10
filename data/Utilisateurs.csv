@@ -6,3 +6,5 @@ user_id,username,mot_de_passe,sel,role,email
 5,ae,6b380cc4bf290ec0e3a7cb26b3a8da18b096c626150ec9089f442eaeecd67cac,b'\x1f\xccL\xf1\x80sT\x85CaFw:\xf0\x91\xda',user,ae@mail.com
 6,smahli,f58e697b22ed0d02dfda9e97ab10b9dfb9878d4a7f2faf6f09eada92b9a7eca7,b'\xc0\xeeJR\xd0\xd2p\xe3\xb5\x9d\x06\x85\xf2\x87c\x91',user,zit zitoune
 7,aaa,9c79efafbd1b573bce03eb5f37133006c27be7f9073d3520b50e3e2a420ed89b,b'\xd1\x00\xa8\x14\xaa\xc1~\xc3b&:\x9d\x00\xb1\xaa5',user,aaa@aa.com
+8,a,32514777b5e1e9b6be302c67c77fde234826b81cd94b2591c964cd08c80365fb,b'\xaeD0\xc9\x87sZ\x87h\x87\x07j\xc1\x13\xf6w',user,a@a.com
+9,titi,5bf9d9fd7359850b3eac1fc4efca8a3ad243ead2553099392b538b033b79ce42,b'\x08\x90L\xb0\xf0\xd8Y\x16\xf3\x9bp\xf9\xca-G\xe0',user,titi@titi.com

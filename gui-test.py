@@ -9,6 +9,8 @@ from Modules.gestion_utilisateur import *
 from Modules.gestion_csv_produit import *
 from Modules.authentification import *
 
+
+
 # Classe principale de l'application
 class Application(tk.Tk):
     def __init__(self):
@@ -31,7 +33,7 @@ class Application(tk.Tk):
         frame = tk.Frame(self, bg="#1E1E1E")
         frame.pack(padx=20, pady=20, fill="both", expand=True)
 
-        self.header_label = tk.Label(frame, text="====== MENU PRINCIPAL =====", font=("Helvetica", 50), bg="black", fg='#39FF14')
+        self.header_label = tk.Label(frame, text=" MENU PRINCIPAL ", font=("Helvetica", 50), bg="black", fg='#39FF14')
         self.header_label.pack(pady=20)
 
         self.connexion_button = tk.Button(frame, text="Connexion", command=self.open_connexion, width=15, fg='#014421', font=("Helvetica", 30))
@@ -51,24 +53,26 @@ class Application(tk.Tk):
     def open_connexion(self):
         # Ouvre la fenêtre de connexion.
         self.clear_window()
+        frame = tk.Frame(self, bg="#1E1E1E")
+        frame.pack(padx=20, pady=20, fill="both", expand=True)
 
-        self.connexion_label = tk.Label(self, text="=== FORMULAIRE DE CONNEXION ===", font=("Helvetica", 25), bg="black", fg='white')
+        self.connexion_label = tk.Label(frame, text=" FORMULAIRE DE CONNEXION ", font=("Helvetica", 25), bg="black", fg='#39FF14')
         self.connexion_label.pack(pady=20)
 
-        self.username_label = tk.Label(self, text="Nom d'utilisateur", fg="white", bg="black")
+        self.username_label = tk.Label(frame, text="Nom d'utilisateur", fg='#014421', bg="black")
         self.username_label.pack()
-        self.username_entry = tk.Entry(self)
+        self.username_entry = tk.Entry(frame)
         self.username_entry.pack(pady=5)
 
-        self.password_label = tk.Label(self, text="Mot de passe", fg="white", bg="black")
+        self.password_label = tk.Label(frame, text="Mot de passe", fg='#014421', bg="black")
         self.password_label.pack()
-        self.password_entry = tk.Entry(self, show="*")
+        self.password_entry = tk.Entry(frame, show="*")
         self.password_entry.pack(pady=5)
 
-        self.login_button = tk.Button(self, text="Se connecter", command=self.login, width=15, bg="white", fg="black", font=("Helvetica", 15))
+        self.login_button = tk.Button(frame, text="Se connecter", command=self.login, width=15, bg="white", fg="black", font=("Helvetica", 15))
         self.login_button.pack(pady=10)
 
-        self.back_button = tk.Button(self, text="Retour", command=self.create_widgets, width=15, bg="white", fg="black", font=("Helvetica", 15))
+        self.back_button = tk.Button(frame, text="Retour", command=self.create_widgets, width=15, bg="white", fg="black", font=("Helvetica", 15))
         self.back_button.pack(pady=10)
         
         self.update_idletasks()
@@ -94,29 +98,31 @@ class Application(tk.Tk):
     def open_inscription(self):
         # Ouvre la fenêtre d'inscription.
         self.clear_window()
+        frame = tk.Frame(self, bg="#1E1E1E")
+        frame.pack(padx=20, pady=20, fill="both", expand=True)
 
-        self.inscription_label = tk.Label(self, text="=== INSCRIPTION ===", font=("Helvetica", 25), bg="black", fg="white")
+        self.inscription_label = tk.Label(frame, text=" INSCRIPTION ", font=("Helvetica", 25), bg="black", fg="white")
         self.inscription_label.pack(pady=20)
 
-        self.email_label = tk.Label(self, text="Adresse email", fg="white", bg="black")
+        self.email_label = tk.Label(frame, text="Adresse email", fg="white", bg="black")
         self.email_label.pack()
-        self.email_entry = tk.Entry(self)
+        self.email_entry = tk.Entry(frame)
         self.email_entry.pack(pady=5)
 
-        self.nom_label = tk.Label(self, text="Nom d'utilisateur", fg="white", bg="black")
+        self.nom_label = tk.Label(frame, text="Nom d'utilisateur", fg="white", bg="black")
         self.nom_label.pack()
-        self.nom_entry = tk.Entry(self)
+        self.nom_entry = tk.Entry(frame)
         self.nom_entry.pack(pady=5)
 
-        self.mdp_label = tk.Label(self, text="Mot de passe", fg="white", bg="black")
+        self.mdp_label = tk.Label(frame, text="Mot de passe", fg="white", bg="black")
         self.mdp_label.pack()
-        self.mdp_entry = tk.Entry(self, show="*")
+        self.mdp_entry = tk.Entry(frame, show="*")
         self.mdp_entry.pack(pady=5)
 
-        self.inscription_button = tk.Button(self, text="S'inscrire", command=self.inscription, width=15, bg="white", fg="black", font=("Helvetica", 15))
+        self.inscription_button = tk.Button(frame, text="S'inscrire", command=self.inscription, width=15, bg="white", fg="black", font=("Helvetica", 15))
         self.inscription_button.pack(pady=10)
 
-        self.back_button = tk.Button(self, text="Retour", command=self.create_widgets, width=15, bg="white", fg="black", font=("Helvetica", 15))
+        self.back_button = tk.Button(frame, text="Retour", command=self.create_widgets, width=15, bg="white", fg="black", font=("Helvetica", 15))
         self.back_button.pack(pady=10)
         
         self.update_idletasks()
@@ -134,18 +140,20 @@ class Application(tk.Tk):
     def admin_panel(self, username):
         # Affiche le panneau d'administration.
         self.clear_window()
+        frame = tk.Frame(self, bg="#1E1E1E")
+        frame.pack(padx=20, pady=20, fill="both", expand=True)
 
-        self.admin_label = tk.Label(self, text="=== * PANNEAU D'ADMINISTRATION * ===", font=("Helvetica", 35), bg="black", fg="red")
+        self.admin_label = tk.Label(frame, text=" * PANNEAU D'ADMINISTRATION * ", font=("Helvetica", 35), bg="black", fg="red")
         self.admin_label.pack(pady=20)
 
         # Ajoutez ici les boutons pour l'administration (ajouter un utilisateur, supprimer un utilisateur, etc.)
-        self.add_user_button = tk.Button(self, text="Ajouter un utilisateur", command=self.add_user_adm, width=15, bg="black", fg="white", font=("Helvetica", 15))
+        self.add_user_button = tk.Button(frame, text="Ajouter un utilisateur", command=self.add_user_adm, width=15, bg="black", fg="white", font=("Helvetica", 15))
         self.add_user_button.pack(pady=10)
 
-        self.delete_user_button = tk.Button(self, text="Supprimer un utilisateur", command=self.delete_user_adm, width=15, bg="black", fg="white", font=("Helvetica", 15))
+        self.delete_user_button = tk.Button(frame, text="Supprimer un utilisateur", command=self.delete_user_adm, width=15, bg="black", fg="white", font=("Helvetica", 15))
         self.delete_user_button.pack(pady=10)
 
-        self.back_button = tk.Button(self, text="Retour", command=self.create_widgets, width=15, bg="black", fg="white", font=("Helvetica", 15))
+        self.back_button = tk.Button(frame, text="Retour", command=self.create_widgets, width=15, bg="black", fg="white", font=("Helvetica", 15))
         self.back_button.pack(pady=10)
         
         self.update_idletasks()
@@ -163,56 +171,48 @@ class Application(tk.Tk):
     def session(self, user_id, username, mdp):
         # Gère la session utilisateur
         self.clear_window()
+        frame = tk.Frame(self, bg="#1E1E1E")
+        frame.pack(padx=20, pady=20, fill="both", expand=True)
+        
+        self.current_user = {"user_id": user_id, "username": username, "mdp": mdp}
 
-        self.session_label = tk.Label(self, text=f"====== SESSION UTILISATEUR 👤 : [{username}] ======", font=("Helvetica", 25), bg="black", fg="white")
+        self.session_label = tk.Label(frame, text=f" SESSION UTILISATEUR - 👤: [{username}] ", font=("Helvetica", 25), bg="black", fg="white")
         self.session_label.pack(pady=20)
 
-        self.manage_products_button = tk.Button(self, text="Gérer mes produits", command=self.menu_produit, width=30, bg="white", fg="black", font=("Helvetica", 15))
+        self.manage_products_button = tk.Button(frame, text="Gérer mes produits", command=self.menu_produit, width=30, bg="white", fg="black", font=("Helvetica", 15))
         self.manage_products_button.pack(pady=10)
 
-        self.manage_account_button = tk.Button(self, text="Gérer mon compte", width=30, bg="white", fg="black", font=("Helvetica", 15))
+        self.manage_account_button = tk.Button(frame, text="Gérer mon compte", width=30, bg="white", fg="black", font=("Helvetica", 15))
         # self.manage_account_button = tk.Button(self, text="Gérer mon compte", command=self.manage_account, width=30, bg="white", fg="black", font=("Helvetica", 15))
         self.manage_account_button.pack(pady=10)
 
-        self.logout_button = tk.Button(self, text="Se déconnecter", command=self.logout, width=30, bg="white", fg="black", font=("Helvetica", 15))
+        self.logout_button = tk.Button(frame, text="Se déconnecter", command=self.logout, width=30, bg="white", fg="black", font=("Helvetica", 15))
         self.logout_button.pack(pady=10)
 
-    def manage_account(self):
-
-        self.clear_window()
-
-        self.manage_account_label = tk.Label(self, text=f"===== GESTION DE L'UTILISATEUR : [{self.username}] =====", font=("helvetica", 25), bg="black", fg="white")
-        self.manage_account_label.pack(pady=20)
-
-        self.edit_account_button = tk.Button(self, text="Modifier mes informations", command=self.edit_account, width=20, bg="white", fg="black", font=("Helvetica", 15))
-        self.edit_account_button.pack(pady=10)
-
-        self.delete_account_button = tk.Button(self, text="Supprimer mes informations", command=self.delete_account, width=20, bg="white", fg="black", font=("Helvetica", 15))
-        self.delete_account_button.pack(pady=10)
-
-        self.back_button = tk.Button(self, text="Retour", command=self.session, width=20, bg="white", fg="black", font=("Helvetica", 15))
-        self.back_button.pack(pady=10)
+    
         
 
     def menu_produit(self):
     #     """Gère la logique pour gérer les produits."""
     #     # Gérer les produits ici
         self.clear_window()
-        self.menu_produit_label = tk.Label(self, text=f"====== GESTION DES PRODUITS 👤 : [{self.username}] ======", font=("Helvetica", 25), bg="black", fg="white")
+        frame = tk.Frame(self, bg="#1E1E1E")
+        frame.pack(padx=20, pady=20, fill="both", expand=True)
+        
+        self.menu_produit_label = tk.Label(frame, text=f" GESTION DES PRODUITS - 👤: [{self.username}] ", font=("Helvetica", 25), bg="black", fg="white")
         self.menu_produit_label.pack(pady=20)
                 
-        self.add_product_button = tk.Button(self, text="Ajouter un produit", command=self.add_product, width=20, bg="white", fg="black", font=("Helvetica", 15))
+        self.add_product_button = tk.Button(frame, text="Ajouter un produit", command=self.add_product, width=20, bg="white", fg="black", font=("Helvetica", 15))
         self.add_product_button.pack(pady=10)
 
         # self.delete_product_button = tk.Button(self, text="Supprimer un produit", width=20, bg="white", fg="black", font=("Helvetica", 15))
-        self.delete_product_button = tk.Button(self, text="Supprimer un produit", command=self.delete_product, width=20, bg="white", fg="black", font=("Helvetica", 15))
+        self.delete_product_button = tk.Button(frame, text="Supprimer un produit", command=self.delete_product, width=20, bg="white", fg="black", font=("Helvetica", 15))
         self.delete_product_button.pack(pady=10)
         
         # self.products_listbox = tk.Listbox(self, height=18, width=80, font=("Helvetica", 12))
         # self.products_listbox.pack(pady=10)
         
-        self.products_tree = ttk.Treeview(self, columns=("Nom", "Prix (€)", "Quantité"), show="headings", height=15)
-        
+        self.products_tree = ttk.Treeview(self, columns=("Nom", "Prix (€)", "Quantité"), show="headings", height=15)       
         # Configurer les en-têtes sans utiliser de style directement
         self.products_tree.heading("Nom", text="Nom")
         self.products_tree.heading("Prix (€)", text="Prix (€)")
@@ -224,24 +224,36 @@ class Application(tk.Tk):
         self.products_tree.heading("Quantité", text="Quantité", command=lambda: self.sort_products("quantité"))
 
         
-        # Création du Treeview pour afficher les produits 
+        # Création du Treeview pour afficher les produits
         self.products_tree.column("Nom", anchor=tk.W, width=200)
         self.products_tree.column("Prix (€)", anchor=tk.CENTER, width=100)
         self.products_tree.column("Quantité", anchor=tk.CENTER, width=100)
         self.products_tree.pack(pady=10)
         
-        self.back_button = tk.Button(self, text="Retour", command=lambda: self.session(self.session_utilisateur, self.username, self.mdp), width=15, bg="white", fg="black", font=("Helvetica", 15))
+        self.back_button = tk.Button(frame, text="Retour", command=lambda: self.session(self.session_utilisateur, self.username, self.mdp), width=15, bg="white", fg="black", font=("Helvetica", 15))
         self.back_button.pack(pady=10)
 
         
-        produits = load_produits(self.user_id)  # Charge les produits depuis le CSV
-        if produits.empty:
+        produits = self.load_produits(user_id=self.current_user.get("user_id"))  # Charge les produits depuis le CSV
+        produits_user = produits[produits["user_id"] == self.user_id]
+        
+        if produits_user.empty:
             self.products_tree.insert("", "end", values=("Aucun produit trouvé.", "", ""))
         else:
             for index, product in produits.iterrows():
                 self.products_tree.insert("", "end", values=(product['nom'], product['prix'], product['quantité']))
         
         self.update_idletasks()   
+        
+    def load_produits(self, user_id=None):
+        try:
+            produits = pnds.read_csv("./data/Produits.csv")
+            if user_id is not None:
+                return produits[produits["user_id"] == user_id]
+        except FileNotFoundError:
+            return pnds.DataFrame(columns=["nom", "prix", "quantité", "user_id"])
+
+
 
     def sort_products(self, key):
         # Variable pour mémoriser l'ordre de tri (ascendant ou descendant)
@@ -251,7 +263,7 @@ class Application(tk.Tk):
         # Alterner l'ordre de tri
         self.sort_order[key] = not self.sort_order[key]
         
-        produits = load_produits(user_id=None)
+        produits = self.load_produits(user_id=self.current_user.get("user_id"))
         
         if key == "nom":
             produits = produits.sort_values(by="nom", ascending=self.sort_order[key])
@@ -290,32 +302,35 @@ class Application(tk.Tk):
         elif sorted_column == "quantité":
             self.products_tree.heading("Quantité", text=f"Quantité {arrow}")
         
-    # """Ouvre un formulaire pour ajouter un produit."""
-    def add_product(self):
-        self.clear_window()
 
-        self.add_product_label = tk.Label(self, text="=== Nouveau Produit ===", font=("Helvetica", 25), bg="black", fg="white")
+    def add_product(self):
+    # """Ouvre un formulaire pour ajouter un produit."""
+        self.clear_window()
+        frame = tk.Frame(self, bg="#1E1E1E")
+        frame.pack(padx=20, pady=20, fill="both", expand=True)
+
+        self.add_product_label = tk.Label(frame, text=" Nouveau Produit ", font=("Helvetica", 25), bg="black", fg="white")
         self.add_product_label.pack(pady=20)
 
-        self.namep_label = tk.Label(self, text="Nom du produit", fg="white", bg="black")
+        self.namep_label = tk.Label(frame, text="Nom du produit", fg="white", bg="black")
         self.namep_label.pack()
-        self.namep_entry = tk.Entry(self)
+        self.namep_entry = tk.Entry(frame)
         self.namep_entry.pack(pady=5)
 
-        self.price_label = tk.Label(self, text="Prix du produit (€)", fg="white", bg="black")
+        self.price_label = tk.Label(frame, text="Prix du produit (€)", fg="white", bg="black")
         self.price_label.pack()
-        self.price_entry = tk.Entry(self)
+        self.price_entry = tk.Entry(frame)
         self.price_entry.pack(pady=5)
         
-        self.quantite_label = tk.Label(self, text="Qauntité", fg="white", bg="black")
+        self.quantite_label = tk.Label(frame, text="Qauntité", fg="white", bg="black")
         self.quantite_label.pack()
-        self.quantite_entry = tk.Entry(self)
+        self.quantite_entry = tk.Entry(frame)
         self.quantite_entry.pack(pady=5)
 
-        self.save_button = tk.Button(self, text="Ajouter", command=self.save_product, width=20, bg="white", fg="black", font=("Helvetica", 15))
+        self.save_button = tk.Button(frame, text="Ajouter le produit", command=self.save_product, width=20, bg="white", fg="black", font=("Helvetica", 15))
         self.save_button.pack(pady=10)
 
-        self.back_button = tk.Button(self, text="Retour", command=self.menu_produit, width=20, bg="white", fg="black", font=("Helvetica", 15))
+        self.back_button = tk.Button(frame, text="Retour", command=self.menu_produit, width=20, bg="white", fg="black", font=("Helvetica", 15))
         self.back_button.pack(pady=10)
         
         self.update_idletasks()
@@ -358,22 +373,24 @@ class Application(tk.Tk):
     def delete_product(self):
         """Supprime un produits"""
         self.clear_window()
+        frame = tk.Frame(self, bg="#1E1E1E")
+        frame.pack(padx=20, pady=20, fill="both", expand=True)
 
-        self.delete_product_label = tk.Label(self, text="=== Supprimer un produit ===", font=("Helvetica", 25), bg="black", fg="white")
+        self.delete_product_label = tk.Label(frame, text=" Supprimer un produit ", font=("Helvetica", 25), bg="black", fg="red")
         self.delete_product_label.pack(pady=20)
 
-        self.produit_label = tk.Label(self, text="Nom du produit à supprimer", bg="black", fg="white")
+        self.produit_label = tk.Label(frame, text="Nom du produit à supprimer", bg="black", fg="white")
         self.produit_label.pack()
-        self.produit_entry = tk.Entry(self)
+        self.produit_entry = tk.Entry(frame)
         self.produit_entry.pack(pady=5)
 
-        self.delete_product_button = tk.Button(self, text="Supprimer", command=self.supp_produits, width=20, bg="white", fg="black", font=("Helvetica", 15))
+        self.delete_product_button = tk.Button(frame, text="Supprimer", command=self.supp_produits, width=20, bg="white", fg="black", font=("Helvetica", 15))
         self.delete_product_button.pack(pady=10)
 
-        self.back_button = tk.Button(self, text="Retour", command=lambda: self.session(self.session_utilisateur, self.username, self.mdp), width=15, bg="white", fg="black", font=("Helvetica", 15))
+        self.back_button = tk.Button(frame, text="Retour", command=self.menu_produit, width=15, bg="white", fg="black", font=("Helvetica", 15))
         self.back_button.pack(pady=10)
 
-        # self.update_idletasks()
+        self.update_idletasks()
 
     def supp_produits(self):
         nom = self.produit_entry.get()
