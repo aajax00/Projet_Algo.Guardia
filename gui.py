@@ -8,7 +8,6 @@ import pandas as pnd
 from Modules.gestion_utilisateur import *
 from Modules.gestion_csv_produit import *
 from Modules.authentification import *
-from gui_modules import *
 from Modules.messagecompromis import *
 
 
@@ -32,6 +31,7 @@ class Application(tk.Tk):
 # Crée les widgets de la fenêtre principale (connexion et inscription)
     def create_widgets(self):
         self.clear_window()
+        self.create_produit()
         frame = tk.Frame(self, bg="#1E1E1E")
         frame.pack(padx=20, pady=20, fill="both", expand=True)
 
@@ -151,7 +151,7 @@ class Application(tk.Tk):
         self.gestion_user_button = tk.Button(frame, text="Gestion des utilisateurs", command=self.gestion_user, width=20, bg="black", fg='#014421', font=("Helvetica", 30))
         self.gestion_user_button.pack(pady=10)
 
-        self.gestion_produit_button = tk.Button(frame, text="Gestion des produits", width=20, bg="black", fg='#014421', font=("Helvetica", 30))
+        self.gestion_produit_button = tk.Button(frame, text="Gestion des produits", command=self.gestion_produit_admin, width=20, bg="black", fg='#014421', font=("Helvetica", 30))
         self.gestion_produit_button.pack(pady=10)
 
         self.back_button = tk.Button(frame, text="Déconnexion", command=self.logout, width=10, bg="black", fg="#FF0000", font=("Helvetica", 15))
@@ -164,20 +164,88 @@ class Application(tk.Tk):
         frame = tk.Frame(self, bg="#1E1E1E")
         frame.pack(padx=20, pady=20, fill="both", expand=True)
 
-        self.admin_label = tk.Label(frame, text=" * PANNEAU D'ADMINISTRATION | 👤: [ADMIN] * ", font=("Helvetica", 25), bg="black", fg="#FF0000")
+        self.admin_label = tk.Label(frame, text=" * GESTION DES UTILISATEURS | 👤: [ADMIN] * ", font=("Helvetica", 25), bg="black", fg="#FF0000")
         self.admin_label.pack(pady=20)
 
         # Ajoutez ici les boutons pour l'administration (ajouter un utilisateur, supprimer un utilisateur, etc.)
-        self.add_user_button = tk.Button(frame, text="[+]Ajouter un utilisateur", command=self.add_user_admin, width=15, bg="black", fg='#014421', font=("Helvetica", 15))
+        self.add_user_button = tk.Button(frame, text="[+]Ajouter un utilisateur", command=self.add_user_admin, width=20, bg="black", fg='#014421', font=("Helvetica", 15))
         self.add_user_button.pack(pady=10)
 
-        self.delete_user_button = tk.Button(frame, text="[-]Supprimer un utilisateur", command=self.delete_user_adm, width=15, bg="black", fg='#014421', font=("Helvetica", 15))
+        self.delete_user_button = tk.Button(frame, text="[-]Supprimer un utilisateur", command=self.delete_user_adm, width=20, bg="black", fg='#014421', font=("Helvetica", 15))
         self.delete_user_button.pack(pady=10)
+        
+        self.user_tree = ttk.Treeview(frame, columns=("User_id", "Username", "Role", "Email"), show="headings", height=15)
+        self.user_tree.heading("User_id", text="User_id")
+        self.user_tree.heading("Username", text="Username")
+        self.user_tree.heading("Role", text="Role")
+        self.user_tree.heading("Email", text="Email")
+        
+        self.user_tree.heading("User_id", text="User_id", command=lambda: self.sort_users_admin("user_id"))
+        self.user_tree.heading("Username", text="Username", command=lambda: self.sort_users_admin("username"))
+        
+        
+        self.user_tree.column("User_id", anchor=tk.W, width=70)
+        self.user_tree.column("Username", anchor=tk.CENTER, width=150)
+        self.user_tree.column("Role", anchor=tk.CENTER, width=50)
+        self.user_tree.column("Email", anchor=tk.CENTER, width=200)
+        self.user_tree.pack(pady=10)
 
-        self.back_button = tk.Button(frame, text="Retour", command=self.admin_panel, width=10, bg="black", fg="#FF0000", font=("Helvetica", 20))
+
+        self.back_button = tk.Button(frame, text="Retour", command=lambda: self.admin_panel(self.username), width=10, bg="black", fg="#FF0000", font=("Helvetica", 20))
         self.back_button.pack(pady=10)
         
+        users = load_users()
+        
+        if users.empty:
+            return
+        else:
+            for index, user in users.iterrows():
+                self.user_tree.insert("", "end", values=(user['user_id'], user['username'], user['role'], user['email']))
+                
         self.update_idletasks()
+        
+    def sort_users_admin(self, key):
+        if not hasattr(self, 'sort_order'):
+            self.sort_order = {"user_id": False, "username": False}
+            
+        self.sort_order[key] = not self.sort_order[key]
+        
+        users = load_users()
+        
+        if key == "user_id":
+            users = users.sort_values(by="user_id", ascending=self.sort_order[key])
+        if key == "username":
+            users = users.sort_values(by="username", ascending=self.sort_order[key])
+            
+        for item in self.user_tree.get_children():
+            self.user_tree.delete(item)
+            
+        for index, user in users.iterrows():
+            self.user_tree.insert("", "end", values=(user['user_id'], user['username'], user['role'], user['email']))
+
+            
+        self.update_header_user_with_arrows(key)
+        self.update_idletasks()
+        
+    def update_header_user_with_arrows(self, sorted_column):
+    # Enlever les flèches existantes et les réinitialiser
+        for col in ["User_id", "Username"]:
+            text = col
+            self.user_tree.heading(col, text=text)
+
+    # Ajouter la flèche à la colonne triée
+        if self.sort_order[sorted_column]:
+            arrow = "⬇"  # Flèche croissante
+        else:
+            arrow = "⬆"  # Flèche descroissante
+
+    # Mettre à jour l'en-tête avec la flèche
+        if sorted_column == "user_id":
+            self.user_tree.heading("User_id", text=f"User_id {arrow}")
+        elif sorted_column == "username":
+            self.user_tree.heading("Username", text=f"Username {arrow}")
+
+        
 
     def add_user_admin(self):
         # ajouter un utilisateur
@@ -212,7 +280,7 @@ class Application(tk.Tk):
         self.inscription_button = tk.Button(frame, text="Ajouter", command=self.admin_user, width=15, bg="white", fg='#014421', font=("Helvetica", 20))
         self.inscription_button.pack(pady=10)
 
-        self.back_button = tk.Button(frame, text="Retour", command=self.create_widgets, width=10, bg="white", fg="#FF0000", font=("Helvetica", 15))
+        self.back_button = tk.Button(frame, text="Retour", command=self.gestion_user, width=10, bg="white", fg="#FF0000", font=("Helvetica", 15))
         self.back_button.pack(pady=10)
         
         self.update_idletasks()
@@ -230,7 +298,195 @@ class Application(tk.Tk):
     def delete_user_adm(self):
         """Logique pour supprimer un utilisateur"""
         # Ajouter ici la logique de suppression d'un utilisateur
-        pass
+        self.clear_window()
+        frame = tk.Frame(self, bg="#1E1E1E")
+        frame.pack(padx=20, pady=20, fill="both", expand=True)
+
+        self.suppression_label = tk.Label(frame, text=" [-] Supprimer un utilisateur ", font=("Helvetica", 25), bg="black", fg="#39FF14")
+        self.suppression_label.pack(pady=20)
+
+        self.admin_snom_label = tk.Label(frame, text="Nom d'utilisateur", fg="white", bg="#1E1E1E")
+        self.admin_snom_label.pack()
+        self.admin_snom_entry = tk.Entry(frame)
+        self.admin_snom_entry.pack(pady=5)
+
+        self.suppression_button = tk.Button(frame, text="Supprimer", command=self.admin_delete, width=15, bg="white", fg='#014421', font=("Helvetica", 20))
+        self.suppression_button.pack(pady=10)
+
+        self.back_button = tk.Button(frame, text="Retour", command=self.gestion_user, width=10, bg="white", fg="#FF0000", font=("Helvetica", 15))
+        self.back_button.pack(pady=10)
+        
+        self.update_idletasks()
+
+    def admin_delete(self):
+        username = self.admin_snom_entry.get()
+        supp_user_admin(username)
+
+    def gestion_produit_admin(self):
+    #     """Gère la logique pour gérer les produits."""
+    #     # Gérer les produits ici
+        self.clear_window()
+        frame = tk.Frame(self, bg="#1E1E1E")
+        frame.pack(padx=20, pady=20, fill="both", expand=True)
+        
+        
+        self.gestion_produit_label = tk.Label(frame, text=" * GESTION DES PRODUITS | 👤: [ADMIN] * ", font=("Helvetica", 25), bg="black", fg="#FF0000")
+        self.gestion_produit_label.pack(pady=20)
+                
+        self.add_product_button = tk.Button(frame, text="[+]Ajouter un produit", command=self.open_add_product_admin, width=20, bg="white", fg='#014421', font=("Helvetica", 15))
+        self.add_product_button.pack(pady=10)
+
+        self.delete_product_button = tk.Button(frame, text="[-]Supprimer un produit", command=self.delete_product_admin, width=20, bg="white", fg='#014421', font=("Helvetica", 15))
+        self.delete_product_button.pack(pady=10)
+        
+        self.products_admin_tree = ttk.Treeview(frame, columns=("Nom", "Prix(€)", "Quantité", "User_id"), show="headings", height=15)
+
+        self.products_admin_tree.heading("Nom", text="Nom")
+        self.products_admin_tree.heading("Prix(€)", text="Prix(€)")
+        self.products_admin_tree.heading("Quantité", text="Quantité")
+        self.products_admin_tree.heading("User_id", text="User_id")
+        
+        self.products_admin_tree.heading("Nom", text="Nom", command=lambda: self.sort_products_admin("nom"))
+        self.products_admin_tree.heading("Prix(€)", text="Prix(€)", command=lambda: self.sort_products_admin("prix"))
+        self.products_admin_tree.heading("Quantité", text="Quantité", command=lambda: self.sort_products_admin("quantité"))
+        self.products_admin_tree.heading("User_id", text="User_id", command=lambda: self.sort_products_admin("user_id"))
+
+        
+        # Création du Treeview pour afficher les produits
+        self.products_admin_tree.column("Nom", anchor=tk.W, width=150)
+        self.products_admin_tree.column("Prix(€)", anchor=tk.CENTER, width=100)
+        self.products_admin_tree.column("Quantité", anchor=tk.CENTER, width=75)
+        self.products_admin_tree.column("User_id", anchor=tk.CENTER, width=75)
+        self.products_admin_tree.pack(pady=10)
+        
+        self.back_button = tk.Button(frame, text="Retour", command=lambda: self.admin_panel(self.username), width=10, bg="black", fg="#FF0000", font=("Helvetica", 20))
+        self.back_button.pack(pady=10)
+        
+        produits = load_produits()  # Charge les produits depuis le CSV
+        
+        if produits is None:
+            self.products_admin_tree.insert("", "end", values=("Aucun produit trouvé.", "", ""))
+            return
+        else:
+            for index, product in produits.iterrows():
+                self.products_admin_tree.insert("", "end", values=(product['nom'], product['prix'], product['quantité'], product['user_id']))
+        
+
+
+        self.update_idletasks()
+
+
+    def open_add_product_admin(self):
+        self.clear_window()
+        frame = tk.Frame(self, bg="#1E1E1E")
+        frame.pack(padx=20, pady=20, fill="both", expand=True)
+
+        header_label = tk.Label(frame, text=" Ajouter un Produit ", font=("Helvetica", 25), bg="black", fg="#39FF14")
+        header_label.pack(pady=20)
+
+        user_id_label = tk.Label(frame, text="ID utilisateur", fg="white", bg="black")
+        user_id_label.pack()
+        self.user_id_entry = tk.Entry(frame)
+        self.user_id_entry.pack(pady=5)
+
+        product_name_label = tk.Label(frame, text="Nom du Produit", fg="white", bg="black")
+        product_name_label.pack()
+        self.product_name_entry = tk.Entry(frame)
+        self.product_name_entry.pack(pady=5)
+
+        product_price_label = tk.Label(frame, text="Prix du Produit", fg="white", bg="black")
+        product_price_label.pack()
+        self.product_price_entry = tk.Entry(frame)
+        self.product_price_entry.pack(pady=5)
+
+        product_quantity_label = tk.Label(frame, text="Quantité du Produit", fg="white", bg="black")
+        product_quantity_label.pack()
+        self.product_quantity_entry = tk.Entry(frame)
+        self.product_quantity_entry.pack(pady=5)
+
+        submit_button = tk.Button(frame, text="Ajouter", command=self.add_product_admin, width=15, bg="white", fg="black", font=("Helvetica", 15))
+        submit_button.pack(pady=10)
+
+        back_button = tk.Button(frame, text="Retour", command=self.gestion_produit_admin, width=15, bg="white", fg="black", font=("Helvetica", 15))
+        back_button.pack(pady=10)
+        
+        self.update_idletasks()
+
+    def add_product_admin(self):
+        user_id = self.user_id_entry.get()
+        product_name = self.product_name_entry.get()
+        product_price = self.product_price_entry.get()
+        product_quantity = self.product_quantity_entry.get()
+        
+        users = load_users()
+
+        if not user_id or not product_name or not product_price or not product_quantity:
+            messagebox.showerror("Erreur", "Tous les champs sont requis.")
+            return
+
+        if user_id not in users["user_id"].values:
+            print(f"{RED}Utilisateur {END}{JAUNE}{user_id} {END}{JAUNE}non trouvé.{END}")
+            return
+        add_produit(product_name, product_price, product_quantity, user_id)
+        print(f"{GREEN}Produit ajouté avec succès pour l'utilisateur {END}{JAUNE}{user_id}{END}{GREEN}.{END}")
+        messagebox.showinfo("Succès", f"Produit '{product_name}' ajouté avec succès pour l'utilisateur {user_id}.")
+        
+
+    def sort_products_admin(self, key):
+        # Variable pour mémoriser l'ordre de tri (ascendant ou descendant)
+        if not hasattr(self, 'sort_order'):
+            self.sort_order = {"nom": False, "prix": False, "quantité": False, "user_id": False}
+            
+        # Alterner l'ordre de tri
+        self.sort_order[key] = not self.sort_order[key]
+        
+        produits = load_produits()
+        
+        if key == "nom":
+            produits = produits.sort_values(by="nom", ascending=self.sort_order[key])
+        elif key == "prix":
+            produits = produits.sort_values(by="prix", ascending=self.sort_order[key])
+        elif key == "quantité":
+            produits = produits.sort_values(by="quantité", ascending=self.sort_order[key])
+        elif key == "user_id":
+            produits = produits.sort_values(by="user_id", ascending=self.sort_order[key])
+
+            
+        for item in self.products_admin_tree.get_children():
+            self.products_admin_tree.delete(item)
+        
+        for index, product in produits.iterrows():
+            self.products_admin_tree.insert("", "end", values=(product['nom'], product['prix'], product['quantité'], product['user_id']))
+            
+        self.admin_update_header_with_arrows(key)
+
+        self.update_idletasks()
+
+
+    def admin_update_header_with_arrows(self, sorted_column):
+    # Enlever les flèches existantes et les réinitialiser
+        for col in ["Nom", "Prix(€)", "Quantité", "User_id"]:
+            text = col
+            self.products_admin_tree.heading(col, text=text)
+
+    # Ajouter la flèche à la colonne triée
+        if self.sort_order[sorted_column]:
+            arrow = "⬇"  # Flèche croissante
+        else:
+            arrow = "⬆"  # Flèche descroissante
+
+    # Mettre à jour l'en-tête avec la flèche
+        if sorted_column == "nom":
+            self.products_admin_tree.heading("Nom", text=f"Nom {arrow}")
+        elif sorted_column == "prix":
+            self.products_admin_tree.heading("Prix(€)", text=f"Prix(€) {arrow}")
+        elif sorted_column == "quantité":
+            self.products_admin_tree.heading("Quantité", text=f"Quantité {arrow}")
+        elif sorted_column == "user_id":
+            self.products_admin_tree.heading("User_id", text=f"User_id {arrow}")
+
+
+
 
     def session(self, user_id, username, mdp):
         # Gère la session utilisateur
@@ -279,21 +535,21 @@ class Application(tk.Tk):
         # self.products_listbox = tk.Listbox(self, height=18, width=80, font=("Helvetica", 12))
         # self.products_listbox.pack(pady=10)
         
-        self.products_tree = ttk.Treeview(frame, columns=("Nom", "Prix (€)", "Quantité"), show="headings", height=15)       
+        self.products_tree = ttk.Treeview(frame, columns=("Nom", "Prix(€)", "Quantité"), show="headings", height=15)       
         # Configurer les en-têtes sans utiliser de style directement
         self.products_tree.heading("Nom", text="Nom")
-        self.products_tree.heading("Prix (€)", text="Prix (€)")
+        self.products_tree.heading("Prix(€)", text="Prix(€)")
         self.products_tree.heading("Quantité", text="Quantité")
 
         # Configurer les en-têtes pour qu'ils soient cliquables et triables
         self.products_tree.heading("Nom", text="Nom", command=lambda: self.sort_products("nom"))
-        self.products_tree.heading("Prix (€)", text="Prix (€)", command=lambda: self.sort_products("prix"))
+        self.products_tree.heading("Prix(€)", text="Prix(€)", command=lambda: self.sort_products("prix"))
         self.products_tree.heading("Quantité", text="Quantité", command=lambda: self.sort_products("quantité"))
 
         
         # Création du Treeview pour afficher les produits
         self.products_tree.column("Nom", anchor=tk.W, width=200)
-        self.products_tree.column("Prix (€)", anchor=tk.CENTER, width=100)
+        self.products_tree.column("Prix(€)", anchor=tk.CENTER, width=100)
         self.products_tree.column("Quantité", anchor=tk.CENTER, width=100)
         self.products_tree.pack(pady=10)
         
@@ -302,7 +558,7 @@ class Application(tk.Tk):
 
         
         produits = self.load_produits(user_id=self.current_user.get("user_id"))  # Charge les produits depuis le CSV
-        # produits_user = produits[produits["user_id"] == self.user_id]
+        # produits = produits[produits["user_id"] == self.user_id]
         
         if produits is None:
             self.products_tree.insert("", "end", values=("Aucun produit trouvé.", "", ""))
@@ -320,6 +576,9 @@ class Application(tk.Tk):
                 return produits[produits["user_id"] == user_id]
         except FileNotFoundError:
             return pnds.DataFrame(columns=["nom", "prix", "quantité", "user_id"])
+        
+
+
 
 
 
@@ -352,7 +611,7 @@ class Application(tk.Tk):
         
     def update_header_with_arrows(self, sorted_column):
     # Enlever les flèches existantes et les réinitialiser
-        for col in ["Nom", "Prix (€)", "Quantité"]:
+        for col in ["Nom", "Prix(€)", "Quantité"]:
             text = col
             self.products_tree.heading(col, text=text)
 
@@ -366,7 +625,7 @@ class Application(tk.Tk):
         if sorted_column == "nom":
             self.products_tree.heading("Nom", text=f"Nom {arrow}")
         elif sorted_column == "prix":
-            self.products_tree.heading("Prix (€)", text=f"Prix (€) {arrow}")
+            self.products_tree.heading("Prix(€)", text=f"Prix(€) {arrow}")
         elif sorted_column == "quantité":
             self.products_tree.heading("Quantité", text=f"Quantité {arrow}")
         
@@ -601,6 +860,29 @@ class Application(tk.Tk):
 
         self.update_idletasks()
 
+
+    def delete_product_admin(self):
+        """Supprime un produits"""
+        self.clear_window()
+        frame = tk.Frame(self, bg="#1E1E1E")
+        frame.pack(padx=20, pady=20, fill="both", expand=True)
+
+        self.delete_product_label = tk.Label(frame, text=" [-]SUPPRIMER UN PRODUIT ", font=("Helvetica", 25), bg="black", fg="#39FF14")
+        self.delete_product_label.pack(pady=20)
+
+        self.produit_label = tk.Label(frame, text="Nom du produit à supprimer", bg="#1E1E1E", fg="white")
+        self.produit_label.pack()
+        self.produit_entry = tk.Entry(frame)
+        self.produit_entry.pack(pady=5)
+
+        self.delete_product_button = tk.Button(frame, text="Supprimer", command=self.supp_produits, width=20, bg="white", fg="#014421", font=("Helvetica", 15))
+        self.delete_product_button.pack(pady=10)
+
+        self.back_button = tk.Button(frame, text="Retour", command=self.gestion_produit_admin, width=10, bg="white", fg="#FF0000", font=("Helvetica", 20))
+        self.back_button.pack(pady=10)
+
+        self.update_idletasks()
+
     def supp_produits(self):
         nom = self.produit_entry.get()
 
@@ -610,6 +892,8 @@ class Application(tk.Tk):
         supp_produit(nom)
         
         messagebox.showinfo("Succès", "Produit supprimé avec succès !")
+
+        
 
     def logout(self):
         """Déconnecte l'utilisateur et retourne à la page de connexion."""

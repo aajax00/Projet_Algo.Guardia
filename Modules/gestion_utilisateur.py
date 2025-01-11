@@ -78,7 +78,7 @@ def add_users(username, mdp, email, role="user"):
     save_users(users)    
     print(f"{GREEN}\nUtilisateur ajouté avec succès{END}")
 
-# add_users("admin", "admin.@.", "vitide5926@outlook.com", "admin")
+add_users("admin", "admin.@.", "agardien001@gmailcom", "admin")
     
 # supprimer un utilisateur   
 def supp_users(username, mdp):
