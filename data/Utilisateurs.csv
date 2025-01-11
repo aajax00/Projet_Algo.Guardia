@@ -1,10 +1,6 @@
 user_id,username,mot_de_passe,sel,role,email
-1,admin,72619b2646e3194c3e34fb4cc1f94b877abbba88aa96bcc48586c62e17bdd470,b'~.LC\\xe3\\x08)\\x05\\xc3z\\xdf\\x06\\x84\\xa6I\\xbf',admin,agardien001@gmail.com
-2,ajax-test,55f6a5bb683679f0ad2d4829846a97294b5dc494a619e2c215bb645630ae5a25,b'\xab\xe16\xaa\xa3b\x1b@>\xd0\xcf\x9b6\xa16\x06',user,usertest-algo@yopmail.com
-3,az,65041a92404ea8cab3f5261f6ed68f9c13c8efe0c702c074bbd45a4a47a60971,b'\x1c\x0bL\xad@D\xcd\x8b\xaa\x14\xdb\xad\x0e\xcb\xe4\xe6',user,as@sas.com
-4,naomie,94776729697e9682d280bdcb165472601049ce3743115ec023c845eedec7ca3d,b'\xf9\xc2B\xc8`>1\xa24\xdc\x7f\x85\xb6\xea\xf4%',user,naomie@mail.com
-5,ae,6b380cc4bf290ec0e3a7cb26b3a8da18b096c626150ec9089f442eaeecd67cac,b'\x1f\xccL\xf1\x80sT\x85CaFw:\xf0\x91\xda',user,ae@mail.com
-6,smahli,f58e697b22ed0d02dfda9e97ab10b9dfb9878d4a7f2faf6f09eada92b9a7eca7,b'\xc0\xeeJR\xd0\xd2p\xe3\xb5\x9d\x06\x85\xf2\x87c\x91',user,zit zitoune
-7,aaa,9c79efafbd1b573bce03eb5f37133006c27be7f9073d3520b50e3e2a420ed89b,b'\xd1\x00\xa8\x14\xaa\xc1~\xc3b&:\x9d\x00\xb1\xaa5',user,aaa@aa.com
-8,a,32514777b5e1e9b6be302c67c77fde234826b81cd94b2591c964cd08c80365fb,b'\xaeD0\xc9\x87sZ\x87h\x87\x07j\xc1\x13\xf6w',user,a@a.com
-9,titi,5bf9d9fd7359850b3eac1fc4efca8a3ad243ead2553099392b538b033b79ce42,b'\x08\x90L\xb0\xf0\xd8Y\x16\xf3\x9bp\xf9\xca-G\xe0',user,titi@titi.com
+1,admin,effde1e34e14b4a115a9d77d4936e27fef3f2d01d47cf3186d86d64a6fd1b8fa,b'\x02+\xfb\x94W=\xac\xf4pRIE\xaf\x8c\x97\xd3',admin,vitide5926@outlook.com
+2,molare,ba101ebadbf1b8e029cbaf5816fd01a42db33161543d9f94f3aae35ffcbf3ade,"b'VU\xd9{z\x1d\xef\x07\xab\xd6T\x9a,I\xf8s'",user,errr@u.com
+3,az,546d0cfbe26c7dcc14c1602bf7eb575e6686fb2821d7aecc6cac43dd39e14855,b'\xcc\x16\x98\xac\x91\x1d=JO\xfc\x9fI\xcc\x978\xf0',user,az
+4,boule,1eee58d6d2d3167c44d837dbd264a602a3c6676eac793f575b21591bd3bcd191,b'\x91\xf6J\x94\x92\x14\x80x\xd6\xbe\xd1\x83\xa7>\xa3\x97',user,boulec128@gmail.com
+5,,b32f137081b9470b89f369b7cf6f23aee08418a6b8235d038c60f2b0061582b1,"b'M\\x0b\\x11\\xea1\\x89\\xb8\\xacf[!\\x9b\\xdd\\x8ck\\xc8'",,

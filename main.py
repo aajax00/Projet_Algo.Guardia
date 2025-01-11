@@ -117,10 +117,11 @@ def admin_panel(username):
         # Ajouter un utilisateur
         elif choix == "1":
             print(f"\n{GREEN}=== CREATION D'UTILISATEUR ==={END}\n")
+            email =  input(f"{BLUE}Entrez l'email': {END}")
             username = input(f"{BLUE}Entrez le nom d'utilisateur: {END}")
             mdp = getpass.getpass(f"{BLUE}Attribuez un mot de passe: {END}")
             role = input(f"{BLUE}Donnez lui un rôle (admin/user): {END}")
-            add_users(username, mdp, role)
+            add_users(username, mdp, email, role)
             time.sleep(1.8)
             instance()
         
